@@ -1,0 +1,38 @@
+# ─── WordPress Core ───────────────────────────────────
+wp-admin/
+wp-includes/
+wp-*.php
+xmlrpc.php
+index.php
+license.txt
+readme.html
+
+# ─── Uploads, Plugins & Upgrades ──────────────────────
+wp-content/uploads/
+wp-content/plugins/
+wp-content/upgrade/
+
+# ─── Themes (keep only your child theme) ──────────────
+wp-content/themes/*
+!wp-content/themes/hello-elementor-child/
+
+# ─── Environment & Config ─────────────────────────────
+wp-config.php
+wp-config-sample.php
+.env
+*.env.*
+
+# ─── Cache & Generated Files ──────────────────────────
+wp-content/cache/
+wp-content/advanced-cache.php
+wp-content/object-cache.php
+wp-content/wp-cache-config.php
+
+# ─── OS & Editor Noise ────────────────────────────────
+.DS_Store
+Thumbs.db
+*.log
+*.bak
+*.swp
+.idea/
+.vscode/
