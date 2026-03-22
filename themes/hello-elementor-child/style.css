@@ -1,0 +1,125 @@
+/*
+ Theme Name:   Hello Elementor Child
+ Theme URI:    https://internationalelephants.org
+ Description:  Hello Elementor Child Theme — International Elephants
+ Author:       Dr. Michelle Szydlowski
+ Template:     hello-elementor
+ Version:      1.0.0
+ Text Domain:  hello-elementor-child
+*/
+
+:root {
+    /* ── Brand Colors ─────────────────────────────── */
+    --ie-global-blue: #0b3c5d;
+    --ie-ocean-blue: #1f6f8b;
+    --ie-earth-green: #4caf50;
+    --ie-grass-green: #7ed957;
+    --ie-light-aqua: #8ed1fc;
+
+    /* ── Neutral Palette ──────────────────────────── */
+    --ie-white: #ffffff;
+    --ie-off-white: #f5f7fa;
+    --ie-border: #e0e4ea;
+    --ie-text-dark: #1a1a2e;
+    --ie-text-body: #333333;
+    --ie-text-muted: #666666;
+
+    /* ── Semantic Aliases ─────────────────────────── */
+    --ie-color-primary: var(--ie-global-blue);
+    --ie-color-accent: var(--ie-grass-green);
+    --ie-color-link: var(--ie-ocean-blue);
+    --ie-color-bg: var(--ie-off-white);
+    --ie-color-surface: var(--ie-white);
+
+    /* ── Typography ───────────────────────────────── */
+    --ie-font-heading: "Poppins", sans-serif;
+    --ie-font-body: "Open Sans", sans-serif;
+
+    /* ── Type Scale ───────────────────────────────── */
+    --ie-text-xs: 0.75rem; /* 12px */
+    --ie-text-sm: 0.875rem; /* 14px */
+    --ie-text-base: 1rem; /* 16px */
+    --ie-text-lg: 1.125rem; /* 18px */
+    --ie-text-xl: 1.25rem; /* 20px */
+    --ie-text-2xl: 1.5rem; /* 24px */
+    --ie-text-3xl: 1.875rem; /* 30px */
+    --ie-text-4xl: 2.25rem; /* 36px */
+    --ie-text-5xl: 3rem; /* 48px */
+
+    /* ── Spacing Scale ────────────────────────────── */
+    --ie-space-xs: 0.5rem; /* 8px  */
+    --ie-space-sm: 1rem; /* 16px */
+    --ie-space-md: 1.5rem; /* 24px */
+    --ie-space-lg: 2.5rem; /* 40px */
+    --ie-space-xl: 4rem; /* 64px */
+    --ie-space-2xl: 6rem; /* 96px */
+
+    /* ── Border Radius ────────────────────────────── */
+    --ie-radius-sm: 4px;
+    --ie-radius-md: 8px;
+    --ie-radius-lg: 16px;
+    --ie-radius-full: 9999px;
+
+    /* ── Shadows ──────────────────────────────────── */
+    --ie-shadow-sm: 0 1px 3px rgba(11, 60, 93, 0.08);
+    --ie-shadow-md: 0 4px 16px rgba(11, 60, 93, 0.12);
+    --ie-shadow-lg: 0 8px 32px rgba(11, 60, 93, 0.18);
+
+    /* ── Layout ───────────────────────────────────── */
+    --ie-container: 1200px;
+    --ie-header-h: 80px;
+}
+
+/* Global resets for predictable Elementor behavior */
+body {
+    font-family: var(--ie-font-body);
+    color: var(--ie-text-body);
+    background-color: var(--ie-color-bg);
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--ie-font-heading);
+    color: var(--ie-color-primary);
+    line-height: 1.2;
+}
+a {
+    color: var(--ie-color-link);
+}
+a:hover {
+    color: var(--ie-earth-green);
+}
+
+/* Elementor container max-width override */
+.elementor-section.elementor-section-boxed > .elementor-container {
+    max-width: var(--ie-container);
+}
+
+/* Card base style (reused across archive grids) */
+.ie-card {
+    background: var(--ie-color-surface);
+    border-radius: var(--ie-radius-md);
+    box-shadow: var(--ie-shadow-sm);
+    transition:
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+    overflow: hidden;
+}
+.ie-card:hover {
+    box-shadow: var(--ie-shadow-md);
+    transform: translateY(-2px);
+}
+
+/* Accent bar above section headings */
+.ie-section-heading::before {
+    content: "";
+    display: block;
+    width: 48px;
+    height: 4px;
+    background: var(--ie-color-accent);
+    border-radius: var(--ie-radius-full);
+    margin-bottom: 0.75rem;
+}
