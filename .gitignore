@@ -10,13 +10,13 @@ license.txt
 readme.html
 
 # ─── Uploads, Plugins & Upgrades ──────────────────────
-wp-content/uploads/
-wp-content/plugins/
-wp-content/upgrade/
+/uploads/
+/plugins/
+/upgrade/
 
 # ─── Themes (keep only your child theme) ──────────────
-wp-content/themes/*
-!wp-content/themes/hello-elementor-child/
+/themes/*
+!/themes/hello-elementor-child/
 
 # ─── Environment & Config ─────────────────────────────
 wp-config.php
@@ -25,10 +25,10 @@ wp-config-sample.php
 *.env.*
 
 # ─── Cache & Generated Files ──────────────────────────
-wp-content/cache/
-wp-content/advanced-cache.php
-wp-content/object-cache.php
-wp-content/wp-cache-config.php
+/cache/
+/advanced-cache.php
+/object-cache.php
+/wp-cache-config.php
 
 # ─── OS & Editor Noise ────────────────────────────────
 .DS_Store
