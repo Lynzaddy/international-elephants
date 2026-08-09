@@ -4,7 +4,7 @@
  Description:  Hello Elementor Child Theme — International Elephants
  Author:       Dr. Michelle Szydlowski
  Template:     hello-elementor
- Version:      1.5.0
+ Version:      1.21.0
  Text Domain:  hello-elementor-child
 */
 
@@ -20,6 +20,12 @@
     --ie-earth-green: #4caf50;
     --ie-grass-green: #7ed957;
     --ie-grass-green-hover: #6dcf48;
+    --ie-grass-green-text: #2d7a1a; /* WCAG AA-compliant green for TEXT only —
+                                         5.37:1 on white. Raw grass-green fails
+                                         at 1.76:1 for text; it stays reserved
+                                         for non-text uses (dividers, button
+                                         backgrounds, badge borders) where it
+                                         already passes UI-component contrast. */
     --ie-light-aqua: #8ed1fc;
 
     /* ── Neutral Palette ──────────────────────────── */
@@ -162,157 +168,252 @@ h1.entry-title,
    ========================================================================== */
 
 /* ie-badge — Heading (H4) — Hero pill badge */
+.ie-badge {
+    margin-bottom: var(--ie-space-sm) !important;
+}
 .ie-badge .elementor-heading-title {
     display: inline-block !important;
-    font-family: var(--ie-font-heading);
-    font-size: var(--ie-text-xs);
-    font-weight: 700;
-    letter-spacing: var(--ie-tracking-wide);
-    text-transform: uppercase;
-    color: var(--ie-grass-green);
-    background: var(--ie-badge-bg);
-    border: 1px solid var(--ie-badge-border);
-    border-radius: var(--ie-radius-full);
-    padding: 5px 16px;
-    margin-bottom: var(--ie-space-sm);
-    line-height: 1.4;
+    font-family: var(--ie-font-heading) !important;
+    font-size: var(--ie-text-xs) !important;
+    font-weight: 700 !important;
+    letter-spacing: var(--ie-tracking-wide) !important;
+    text-transform: uppercase !important;
+    color: var(--ie-grass-green) !important;
+    background: var(--ie-badge-bg) !important;
+    border: 1px solid var(--ie-badge-border) !important;
+    border-radius: var(--ie-radius-full) !important;
+    padding: 5px 16px !important;
+    line-height: 1.4 !important;
 }
 
-/* ie-divider-accent — Divider — Short green accent bar */
+/* ie-divider-accent — Divider — Short green accent bar
+   12px matches the comp exactly (was 14px, close but not exact) */
 .ie-divider-accent .elementor-divider {
-    padding-bottom: 14px;
+    padding-bottom: 14px !important;
 }
 .ie-divider-accent .elementor-divider-separator {
     width: 44px !important;
     border-top-style: solid !important;
     border-top-width: 4px !important;
-    border-top-color: var(--ie-grass-green) !important;
+    border-top-color: var(--ie-grass-green-text) !important;
 }
 
 /* ie-eyebrow — Heading (H5) — Small uppercase label
-   Color auto-adapts inside ie-travel-strip (see context rules below) */
+   DEFAULT color uses --ie-grass-green-text (a darker, WCAG AA-compliant
+   green — 5.37:1 on white) rather than the raw --ie-grass-green brand
+   swatch, which only measures 1.76:1 as text and fails accessibility.
+   Used for The Elephant Biography Project, Latest in Research, News &
+   Interviews, Photography, Listen On. Color auto-flips to Light Aqua
+   automatically inside ie-travel-strip (see context rule below) — no
+   extra class needed there. For the small number of instances the comp
+   shows in Ocean Blue instead (About the Researcher, Field Notes, About
+   the Show), add the ie-eyebrow-blue modifier class ALONGSIDE ie-eyebrow
+   on the same widget. Margin tightened to 12px to match the comp exactly. */
+.ie-eyebrow {
+    margin-bottom: 12px !important;
+}
 .ie-eyebrow .elementor-heading-title {
-    font-family: var(--ie-font-heading);
-    font-size: var(--ie-text-xs);
-    font-weight: 700;
-    letter-spacing: var(--ie-tracking-wide);
-    text-transform: uppercase;
-    color: var(--ie-ocean-blue);
-    line-height: 1.4;
-    margin-bottom: var(--ie-space-xs);
+    font-family: var(--ie-font-heading) !important;
+    font-size: var(--ie-text-xs) !important;
+    font-weight: 700 !important;
+    letter-spacing: var(--ie-tracking-wide) !important;
+    text-transform: uppercase !important;
+    color: var(--ie-grass-green-text) !important;
+    line-height: 1.4 !important;
+}
+
+/* ie-eyebrow-blue — modifier — add alongside ie-eyebrow for the specific
+   instances the comp shows in Ocean Blue instead of the green default */
+.ie-eyebrow-blue .elementor-heading-title {
+    color: var(--ie-ocean-blue) !important;
 }
 
 /* ie-hero-title — Heading (H1) — Large white hero headline */
+.ie-hero-title {
+    margin-bottom: var(--ie-space-md) !important;
+}
 .ie-hero-title .elementor-heading-title {
-    font-family: var(--ie-font-heading);
-    font-size: var(--ie-text-6xl);
-    font-weight: 800;
-    color: var(--ie-white);
-    line-height: var(--ie-leading-tight);
-    max-width: 680px;
-    margin-bottom: var(--ie-space-md);
+    font-family: var(--ie-font-heading) !important;
+    font-size: var(--ie-text-6xl) !important;
+    font-weight: 800 !important;
+    color: var(--ie-white) !important;
+    line-height: var(--ie-leading-tight) !important;
+    max-width: 680px !important;
 }
 
-/* ie-hero-subtitle — Text Editor — Hero paragraph */
-.ie-hero-subtitle .elementor-widget-container {
-    max-width: 520px;
-    margin-bottom: var(--ie-space-lg);
+/* ie-hero-subtitle — Text Editor — Hero paragraph
+   In this Elementor Container/Flexbox rendering mode, Text Editor widgets
+   have NO .elementor-widget-container wrapper — the ie-hero-subtitle class
+   sits directly on the same div as elementor-widget-text-editor, with the
+   <p> as its direct child. width:100% + max-width go straight on the class
+   itself so the flex child is actually capped instead of stretching to
+   Elementor's own default max-width:100% on .e-con > .elementor-widget. */
+.ie-hero-subtitle {
+    width: 100% !important;
+    max-width: 520px !important;
+    margin-bottom: var(--ie-space-lg) !important;
 }
 .ie-hero-subtitle p {
-    font-family: var(--ie-font-body);
-    font-size: 19px;
-    color: var(--ie-text-on-dark);
-    line-height: var(--ie-leading-base);
-    margin: 0;
+    font-family: var(--ie-font-body) !important;
+    font-size: 19px !important;
+    color: var(--ie-text-on-dark) !important;
+    line-height: var(--ie-leading-base) !important;
+    margin: 0 !important;
 }
 
 /* ie-section-title — Heading (H2) — Primary section heading
    Color auto-adapts inside ie-travel-strip */
+.ie-section-title {
+    margin-bottom: var(--ie-space-sm) !important;
+}
 .ie-section-title .elementor-heading-title {
-    font-family: var(--ie-font-heading);
-    font-size: var(--ie-text-4xl);
-    font-weight: 700;
-    color: var(--ie-global-blue);
-    line-height: var(--ie-leading-snug);
-    margin-bottom: var(--ie-space-sm);
+    font-family: var(--ie-font-heading) !important;
+    font-size: var(--ie-text-4xl) !important;
+    font-weight: 700 !important;
+    color: var(--ie-global-blue) !important;
+    line-height: var(--ie-leading-snug) !important;
 }
 
 /* ie-intro-title — Heading (H2) — Intro section heading (slightly larger) */
+.ie-intro-title {
+    margin-bottom: 20px !important;
+}
 .ie-intro-title .elementor-heading-title {
-    font-family: var(--ie-font-heading);
-    font-size: 38px;
-    font-weight: 700;
-    color: var(--ie-global-blue);
-    line-height: var(--ie-leading-snug);
-    margin-bottom: 20px;
+    font-family: var(--ie-font-heading) !important;
+    font-size: 38px !important;
+    font-weight: 700 !important;
+    color: var(--ie-global-blue) !important;
+    line-height: var(--ie-leading-snug) !important;
 }
 
 /* ie-section-subtitle — Text Editor — Short subtitle below section heading
-   Color auto-adapts inside ie-travel-strip */
-.ie-section-subtitle .elementor-widget-container {
-    max-width: 640px;
-    margin-bottom: var(--ie-space-xl);
+   Color auto-adapts inside ie-travel-strip. Same direct-class fix as
+   ie-hero-subtitle — no .elementor-widget-container exists to target. */
+.ie-section-subtitle {
+    width: 100% !important;
+    max-width: 640px !important;
+    margin-bottom: var(--ie-space-xl) !important;
 }
 .ie-section-subtitle p {
-    font-family: var(--ie-font-body);
-    font-size: var(--ie-text-lg);
-    color: var(--ie-text-muted);
-    line-height: var(--ie-leading-base);
-    margin: 0;
+    font-family: var(--ie-font-body) !important;
+    font-size: var(--ie-text-lg) !important;
+    color: var(--ie-text-muted) !important;
+    line-height: var(--ie-leading-base) !important;
+    margin: 0 !important;
 }
 
-/* ie-body-text — Text Editor — Standard body copy */
+/* ie-body-text — Text Editor — Standard body copy
+   Every paragraph keeps its own margin-bottom, including the last —
+   matching the comp exactly. This is what provides the spacing to
+   whatever widget follows (e.g. a button), now that Container gap is
+   zeroed for these stacked column layouts (see RESPONSIVE CONTENT WIDTH
+   CAP / LAYOUT section below for the gap-reset rule). */
 .ie-body-text p {
-    font-family: var(--ie-font-body);
-    font-size: var(--ie-text-base);
-    color: var(--ie-text-body);
-    line-height: var(--ie-leading-relaxed);
-    margin-bottom: var(--ie-space-sm);
-}
-.ie-body-text p:last-child {
-    margin-bottom: 0;
+    font-family: var(--ie-font-body) !important;
+    font-size: var(--ie-text-base) !important;
+    color: var(--ie-text-body) !important;
+    line-height: var(--ie-leading-relaxed) !important;
+    margin-bottom: var(--ie-space-sm) !important;
 }
 
-/* ie-photo — Image — Rounded corners + drop shadow */
+/* ie-photo — Image — Rounded corners + drop shadow + crop-fit base
+   object-fit: cover + object-position: center means whatever photo gets
+   uploaded is cropped to fill its box evenly from the center, rather than
+   the box's height being determined by that photo's own native dimensions.
+   This class alone doesn't force a specific shape — pair it with one of
+   the ie-photo-* ratio modifiers below for a guaranteed, predictable box
+   size regardless of what gets uploaded or how much surrounding text
+   there is. Without a modifier, the image keeps its natural ratio as
+   before (safe default — no visual change for existing uses). */
 .ie-photo img {
-    border-radius: var(--ie-radius-lg);
-    box-shadow: var(--ie-shadow-lg);
-    width: 100%;
-    display: block;
+    width: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    border-radius: var(--ie-radius-lg) !important;
+    box-shadow: var(--ie-shadow-lg) !important;
+    display: block !important;
 }
 
-/* ie-credentials — Icon List (Inline) — Expertise badge pills */
+/* ie-photo-4-3 — modifier — landscape 4:3
+   Add alongside ie-photo. Matches the comp's Home Introduction image
+   exactly. Guarantees a consistent box size independent of the uploaded
+   photo's native shape AND independent of how much text sits in the
+   column next to it — solves both at once.
+   height: auto is REQUIRED, not redundant: WordPress images always carry
+   explicit HTML width/height attributes. Without height:auto, browsers
+   use that HTML attribute's literal pixel value and silently ignore
+   aspect-ratio entirely — verified by testing, this is not obvious from
+   the CSS spec alone. Do not remove height:auto from these three rules. */
+.ie-photo-4-3 img {
+    aspect-ratio: 4 / 3 !important;
+    height: auto !important;
+}
+
+/* ie-photo-3-4 — modifier — portrait 3:4
+   Add alongside ie-photo. Use for the About page profile portrait. */
+.ie-photo-3-4 img {
+    aspect-ratio: 3 / 4 !important;
+    height: auto !important;
+}
+
+/* ie-photo-1-1 — modifier — square 1:1
+   Add alongside ie-photo. Use for Podcasts artwork. */
+.ie-photo-1-1 img {
+    aspect-ratio: 1 / 1 !important;
+    height: auto !important;
+}
+
+/* ie-temp-gradient — placeholder hero background — REMOVE once a real
+   photo is uploaded. Add this class to the hero Section's Advanced >
+   CSS Classes alongside its existing hero class (ie-hero, ie-archive-hero,
+   etc). This overrides whatever Elementor's own Background setting is —
+   Elementor's native gradient picker only supports 2 color stops, so this
+   is the only way to get the 3-stop Global Blue → Earth Green → Grass
+   Green sweep used across the comps as a placeholder. You do not need to
+   touch Elementor's own Background tab at all while this class is applied.
+   To swap in a real photo later: remove this class, then set Elementor's
+   Background tab to Classic > Image as normal — no other cleanup needed. */
+.ie-temp-gradient {
+    background: linear-gradient(135deg, #0b3c5d 0%, #4caf50 70%, #7ed957 100%) !important;
+}
+
+/* ie-credentials — Icon List (Inline) — Expertise badge pills
+   margin: 24px 0 matches the comp's .about-credentials rule exactly —
+   needed now that Container gap is zeroed for stacked columns. */
+.ie-credentials {
+    margin: var(--ie-space-md) 0 !important;
+}
 .ie-credentials .elementor-icon-list-items {
-    flex-wrap: wrap;
-    gap: 6px;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
 }
 .ie-credentials .elementor-icon-list-item {
-    background: var(--ie-white);
-    border: 1px solid var(--ie-border);
-    border-radius: var(--ie-radius-sm);
-    padding: 6px 14px;
-    box-shadow: var(--ie-shadow-sm);
+    background: var(--ie-white) !important;
+    border: 1px solid var(--ie-border) !important;
+    border-radius: var(--ie-radius-sm) !important;
+    padding: 6px 14px !important;
+    box-shadow: var(--ie-shadow-sm) !important;
 }
 .ie-credentials .elementor-icon-list-text {
-    font-family: var(--ie-font-heading);
-    font-size: var(--ie-text-xs);
-    font-weight: 600;
-    color: var(--ie-global-blue);
+    font-family: var(--ie-font-heading) !important;
+    font-size: var(--ie-text-xs) !important;
+    font-weight: 600 !important;
+    color: var(--ie-global-blue) !important;
 }
 
 /* ie-card — Any container — Card with shadow and hover lift */
 .ie-card {
-    background: var(--ie-color-surface);
-    border-radius: var(--ie-radius-md);
-    box-shadow: var(--ie-shadow-sm);
-    overflow: hidden;
+    background: var(--ie-color-surface) !important;
+    border-radius: var(--ie-radius-md) !important;
+    box-shadow: var(--ie-shadow-sm) !important;
+    overflow: hidden !important;
     transition:
         box-shadow var(--ie-transition),
-        transform var(--ie-transition);
+        transform var(--ie-transition) !important;
 }
 .ie-card:hover {
-    box-shadow: var(--ie-shadow-md);
-    transform: translateY(-2px);
+    box-shadow: var(--ie-shadow-md) !important;
+    transform: translateY(-2px) !important;
 }
 
 /* ==========================================================================
@@ -395,9 +496,23 @@ h1.entry-title,
 /* ie-hero — Section
    EXCEPTION: Set background image + overlay in Elementor Style tab.
    Also set Layout > Content Width > Full Width in Elementor. */
+/* ie-hero — Section
+   No fixed min-height — the box sizes to its own content. The homepage's
+   badge + 3-line headline + subtitle + buttons naturally settles around
+   580-620px, staying tall and dramatic. Secondary pages using the same
+   class (About, Publications, Podcasts) have less content — shorter
+   headline, no button row — and now shrink proportionally instead of
+   being forced to match the homepage's height with dead space below. */
 .ie-hero {
-    min-height: 620px !important;
     padding: var(--ie-section-pad-y) var(--ie-section-pad-x) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    gap: 0 !important;
+}
+.ie-hero > .e-con-inner {
+    gap: 0 !important;
 }
 
 /* ie-hero-actions — Flex Container (button row)
@@ -412,17 +527,62 @@ h1.entry-title,
     width: auto !important;
 }
 
-/* ie-intro — Section */
+/* ie-intro — Section
+   Elementor's "Boxed" Container type generates an extra wrapper div,
+   <div class="e-con-inner">, between the outer container and its actual
+   children — THAT wrapper is the real flex parent controlling how the
+   text and image columns align against each other, not the outer .ie-intro
+   div itself. align-items set directly on .ie-intro has no effect on its
+   grandchildren; it must target .e-con-inner specifically. Both selectors
+   are included as a safety net in case a future instance of this class
+   is ever applied to a Full Width container instead of Boxed (no
+   .e-con-inner wrapper in that case). */
 .ie-intro {
     background: var(--ie-white) !important;
     padding: var(--ie-section-pad-y-sm) var(--ie-section-pad-x) !important;
+    align-items: flex-start !important;
+}
+.ie-intro > .e-con-inner {
+    align-items: flex-start !important;
+    gap: 64px !important;
+}
+/* Set to 0 — this class is shared between Home (wanted the image pushed
+   down to align with the heading) and Podcasts (wanted top-aligned with
+   the divider instead), and the two conflict since they reuse the same
+   ie-intro/ie-photo classes. Podcasts wins for now. To restore the offset
+   for Home specifically without affecting Podcasts, this needs a distinct
+   class (e.g. ie-photo-offset) added only to the Home image — ask if you
+   want that built out instead of a shared value. */
+.ie-intro .ie-photo {
+    padding-top: 0px !important;
+}
+
+/* ie-col-50 — Container — forces an exact 50/50 split
+   Manually dragging Elementor's column divider handle to "50%" is easy
+   to get slightly wrong — a few px off is enough to change how text
+   wraps, which cascades into the whole layout reading as subtly "off"
+   even when every other margin is correct. Add this class to BOTH
+   column Containers in a 2-column row (e.g. the text column and the
+   image column in ie-intro) to guarantee a mathematically exact half
+   each, matching the comp's CSS Grid "1fr 1fr" exactly — no dragging,
+   no guessing. flex: 1 1 0 makes both columns grow equally from a zero
+   basis; the Container's own gap property (already set to 64px on
+   ie-intro's .e-con-inner) handles the space between them automatically
+   — no calc() needed. Reusable anywhere a true 50/50 split is needed. */
+.ie-col-50 {
+    flex: 1 1 0 !important;
 }
 
 /* ie-research-strip — Section */
 .ie-research-strip {
     background: var(--ie-off-white) !important;
     padding: var(--ie-section-pad-y) var(--ie-section-pad-x) !important;
+    gap: 0 !important;
 }
+.ie-research-strip > .e-con-inner {
+    gap: 0 !important;
+}
+
 .ie-research-strip .elementor-post {
     background: var(--ie-white);
     border-radius: var(--ie-radius-md);
@@ -479,15 +639,20 @@ h1.entry-title,
 .ie-travel-strip {
     background: var(--ie-global-blue) !important;
     padding: var(--ie-section-pad-y) var(--ie-section-pad-x) !important;
+    gap: 0 !important;
 }
+.ie-travel-strip > .e-con-inner {
+    gap: 0 !important;
+}
+
 .ie-travel-strip .ie-eyebrow .elementor-heading-title {
-    color: var(--ie-light-aqua);
+    color: var(--ie-light-aqua) !important;
 }
 .ie-travel-strip .ie-section-title .elementor-heading-title {
-    color: var(--ie-white);
+    color: var(--ie-white) !important;
 }
 .ie-travel-strip .ie-section-subtitle p {
-    color: var(--ie-text-on-dark-muted);
+    color: var(--ie-text-on-dark-muted) !important;
 }
 
 .ie-travel-strip .elementor-post {
@@ -522,12 +687,20 @@ h1.entry-title,
 .ie-about-strip {
     background: linear-gradient(135deg, var(--ie-off-white) 0%, var(--ie-about-strip-bg-end) 100%) !important;
     padding: var(--ie-section-pad-y) var(--ie-section-pad-x) !important;
+    gap: 0 !important;
+}
+.ie-about-strip > .e-con-inner {
+    gap: 0 !important;
 }
 
 /* ie-news-strip — Section */
 .ie-news-strip {
     background: var(--ie-white) !important;
     padding: var(--ie-section-pad-y) var(--ie-section-pad-x) !important;
+    gap: 0 !important;
+}
+.ie-news-strip > .e-con-inner {
+    gap: 0 !important;
 }
 
 /* ie-news-featured — Posts widget (left column, 1 post) */
@@ -635,6 +808,10 @@ h1.entry-title,
 .ie-about-page {
     background: var(--ie-off-white) !important;
     padding: var(--ie-section-pad-y-sm) var(--ie-section-pad-x) !important;
+    gap: 0 !important;
+}
+.ie-about-page > .e-con-inner {
+    gap: 0 !important;
 }
 
 /* ie-contact-card — Container (dark contact info block under portrait)
@@ -676,14 +853,21 @@ h1.entry-title,
     padding-bottom: var(--ie-space-md);
 }
 
-/* ie-subsection-title — Heading (H3) — "Education", "Expertise", "Publications" */
+/* ie-subsection-title — Heading (H3) — "Hosted by", "Connect", "Education", "Expertise", "Publications"
+   margin-top added: the class previously only had margin-bottom, which
+   spaces things out AFTER the heading but leaves zero separation BEFORE
+   it — relying on the preceding paragraph to provide trailing space it
+   doesn't have. Now spaced consistently on both sides. */
+.ie-subsection-title {
+    margin-top: var(--ie-space-md) !important;
+    margin-bottom: var(--ie-space-sm) !important;
+}
 .ie-subsection-title .elementor-heading-title {
     font-family: var(--ie-font-heading);
     font-size: var(--ie-text-xl);
     font-weight: 700;
     color: var(--ie-global-blue);
     line-height: var(--ie-leading-snug);
-    margin-bottom: var(--ie-space-sm);
 }
 
 /* ie-edu-item — Container — One education entry (flex row: year | details)
@@ -711,13 +895,15 @@ h1.entry-title,
 }
 
 /* ie-edu-degree — Heading (H4) — Degree name */
+.ie-edu-degree {
+    margin-bottom: 2px;
+}
 .ie-edu-degree .elementor-heading-title {
     font-family: var(--ie-font-heading);
     font-size: var(--ie-text-base);
     font-weight: 700;
     color: var(--ie-global-blue);
     line-height: var(--ie-leading-snug);
-    margin-bottom: 2px;
 }
 
 /* ie-edu-school — Text Editor — Institution name */
@@ -751,13 +937,15 @@ h1.entry-title,
 }
 
 /* ie-expertise-title — Heading (H4) — Expertise area name */
+.ie-expertise-title {
+    margin-bottom: 4px;
+}
 .ie-expertise-title .elementor-heading-title {
     font-family: var(--ie-font-heading);
     font-size: var(--ie-text-xs);
     font-weight: 700;
     color: var(--ie-global-blue);
     line-height: var(--ie-leading-snug);
-    margin-bottom: 4px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -780,14 +968,24 @@ h1.entry-title,
 .ie-pub-section {
     background: var(--ie-white) !important;
     padding: var(--ie-section-pad-y) var(--ie-section-pad-x) !important;
+    gap: 0 !important;
 }
 .ie-pub-section > .elementor-container,
 .ie-pub-section > .e-con-inner {
     max-width: 860px !important;
+    gap: 0 !important;
 }
 
 /* ie-pub-year — Heading (H3) — Year group label
-   Add one before each year's publications */
+   Add one before each year's publications
+   margin-top moved to the outer class — same reason as every other
+   heading fix in this file: margins on the inner .elementor-heading-title
+   don't affect spacing between flex-item siblings. Corrected to 56px to
+   match the comp exactly (was 64px, an ill-fitting token substitution). */
+.ie-pub-year {
+    margin-bottom: var(--ie-space-md) !important;
+    margin-top: 56px !important;
+}
 .ie-pub-year .elementor-heading-title {
     font-family: var(--ie-font-heading);
     font-size: var(--ie-text-2xl);
@@ -796,28 +994,32 @@ h1.entry-title,
     display: inline-block;
     padding-bottom: var(--ie-space-xs);
     border-bottom: 3px solid var(--ie-grass-green);
-    margin-bottom: var(--ie-space-md);
-    margin-top: var(--ie-space-xl);
 }
 /* Remove top margin from the very first year label */
-.ie-pub-year:first-of-type .elementor-heading-title {
-    margin-top: 0;
+.ie-pub-year:first-of-type {
+    margin-top: 0 !important;
 }
 
 /* ie-pub-item — Text Editor — One full citation entry
    Dr. Szydlowski types/pastes the citation and uses the
-   editor toolbar to apply bold (title) and italic (journal name) */
-.ie-pub-item .elementor-widget-container {
-    padding: var(--ie-space-md) var(--ie-space-md) var(--ie-space-md) var(--ie-space-lg);
-    border-left: 3px solid var(--ie-ocean-blue);
-    border-bottom: 1px solid var(--ie-border);
+   editor toolbar to apply bold (title) and italic (journal name).
+   No .elementor-widget-container wrapper exists in this Elementor
+   Container/Flexbox mode — target the widget element directly.
+   Left padding is hardcoded to 32px (not a token) because it's a
+   comp-specific exact value that doesn't match any existing scale step —
+   var(--ie-space-lg) was 40px, 8px too wide, giving the whole citation
+   block a slightly looser feel than intended. */
+.ie-pub-item {
+    padding: var(--ie-space-md) var(--ie-space-md) var(--ie-space-md) 32px !important;
+    border-left: 3px solid var(--ie-ocean-blue) !important;
+    border-bottom: 1px solid var(--ie-border) !important;
     transition:
         border-left-color var(--ie-transition),
-        background var(--ie-transition);
+        background var(--ie-transition) !important;
 }
-.ie-pub-item:hover .elementor-widget-container {
-    border-left-color: var(--ie-grass-green);
-    background: var(--ie-off-white);
+.ie-pub-item:hover {
+    border-left-color: var(--ie-grass-green) !important;
+    background: var(--ie-off-white) !important;
 }
 /* Author names and surrounding text — muted */
 .ie-pub-item p {
@@ -860,6 +1062,10 @@ h1.entry-title,
     background: var(--ie-off-white) !important;
     padding: var(--ie-section-pad-y) var(--ie-section-pad-x) !important;
     text-align: center;
+    gap: 0 !important;
+}
+.ie-podcast-platforms > .e-con-inner {
+    gap: 0 !important;
 }
 
 /* ie-platform-links — Flex Container
@@ -908,29 +1114,39 @@ h1.entry-title,
     min-height: 320px !important;
     padding: var(--ie-section-pad-y-sm) var(--ie-section-pad-x) !important;
     display: flex !important;
-    align-items: center !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    gap: 0 !important;
+}
+.ie-archive-hero > .e-con-inner {
+    gap: 0 !important;
 }
 
 /* ie-archive-title — Heading (H1) */
+.ie-archive-title {
+    margin-bottom: var(--ie-space-sm) !important;
+}
 .ie-archive-title .elementor-heading-title {
-    font-family: var(--ie-font-heading);
-    font-size: var(--ie-text-5xl);
-    font-weight: 800;
-    color: var(--ie-white);
-    line-height: var(--ie-leading-tight);
-    margin-bottom: var(--ie-space-sm);
+    font-family: var(--ie-font-heading) !important;
+    font-size: var(--ie-text-5xl) !important;
+    font-weight: 800 !important;
+    color: var(--ie-white) !important;
+    line-height: var(--ie-leading-tight) !important;
 }
 
-/* ie-archive-subtitle — Text Editor */
-.ie-archive-subtitle .elementor-widget-container {
-    max-width: 560px;
+/* ie-archive-subtitle — Text Editor
+   No .elementor-widget-container wrapper in this Elementor mode —
+   max-width goes directly on the widget class. */
+.ie-archive-subtitle {
+    max-width: 560px !important;
 }
 .ie-archive-subtitle p {
-    font-family: var(--ie-font-body);
-    font-size: var(--ie-text-lg);
-    color: var(--ie-text-on-dark-muted);
-    line-height: var(--ie-leading-base);
-    margin: 0;
+    font-family: var(--ie-font-body) !important;
+    font-size: var(--ie-text-lg) !important;
+    color: var(--ie-text-on-dark-muted) !important;
+    line-height: var(--ie-leading-base) !important;
+    margin: 0 !important;
 }
 
 /* ==========================================================================
@@ -1032,6 +1248,9 @@ h1.entry-title,
 }
 
 /* ie-sidebar-title — Heading (H5) */
+.ie-sidebar-title {
+    margin-bottom: var(--ie-space-sm);
+}
 .ie-sidebar-title .elementor-heading-title {
     font-family: var(--ie-font-heading);
     font-size: var(--ie-text-xs);
@@ -1039,7 +1258,6 @@ h1.entry-title,
     color: var(--ie-global-blue);
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    margin-bottom: var(--ie-space-sm);
     padding-bottom: 10px;
     border-bottom: 1px solid var(--ie-border);
 }
@@ -1095,8 +1313,14 @@ h1.entry-title,
 .ie-single-hero {
     min-height: 460px !important;
     display: flex !important;
-    align-items: flex-end !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-end !important;
     padding: var(--ie-section-pad-y-sm) var(--ie-section-pad-x) !important;
+    gap: 0 !important;
+}
+.ie-single-hero > .e-con-inner {
+    gap: 0 !important;
 }
 
 /* ie-breadcrumb — Text Editor */
@@ -1115,6 +1339,9 @@ h1.entry-title,
 }
 
 /* ie-single-title — Heading (H1) */
+.ie-single-title {
+    margin-bottom: var(--ie-space-sm);
+}
 .ie-single-title .elementor-heading-title {
     font-family: var(--ie-font-heading);
     font-size: var(--ie-text-4xl);
@@ -1122,7 +1349,6 @@ h1.entry-title,
     color: var(--ie-white);
     line-height: var(--ie-leading-tight);
     max-width: 780px;
-    margin-bottom: var(--ie-space-sm);
 }
 
 /* ie-single-meta — Icon List (Inline) */
@@ -1257,6 +1483,10 @@ h1.entry-title,
 .ie-gallery-body {
     background: var(--ie-off-white) !important;
     padding: var(--ie-section-pad-y) var(--ie-section-pad-x) !important;
+    gap: 0 !important;
+}
+.ie-gallery-body > .e-con-inner {
+    gap: 0 !important;
 }
 
 /* ie-gallery-cards — Posts widget (card grid) */
@@ -1303,18 +1533,26 @@ h1.entry-title,
 .ie-trip-hero {
     min-height: 520px !important;
     display: flex !important;
-    align-items: flex-end !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-end !important;
     padding: var(--ie-section-pad-y-sm) var(--ie-section-pad-x) !important;
+    gap: 0 !important;
+}
+.ie-trip-hero > .e-con-inner {
+    gap: 0 !important;
 }
 
 /* ie-trip-title — Heading (H1) */
+.ie-trip-title {
+    margin-bottom: var(--ie-space-md);
+}
 .ie-trip-title .elementor-heading-title {
     font-family: var(--ie-font-heading);
     font-size: var(--ie-text-5xl);
     font-weight: 800;
     color: var(--ie-white);
     line-height: var(--ie-leading-tight);
-    margin-bottom: var(--ie-space-md);
 }
 
 /* ie-trip-meta — Icon List (Inline, pill style) */
@@ -1337,6 +1575,7 @@ h1.entry-title,
 .ie-trip-narrative {
     background: var(--ie-white) !important;
     padding: var(--ie-space-xl) var(--ie-section-pad-x) !important;
+    gap: 0 !important;
 }
 .ie-trip-narrative > .elementor-container,
 .ie-trip-narrative > .e-con-inner {
@@ -1347,6 +1586,10 @@ h1.entry-title,
 .ie-trip-gallery-section {
     background: var(--ie-off-white) !important;
     padding: var(--ie-section-pad-y) var(--ie-section-pad-x) !important;
+    gap: 0 !important;
+}
+.ie-trip-gallery-section > .e-con-inner {
+    gap: 0 !important;
 }
 
 /* ie-trip-gallery — Gallery widget (Elementor Pro) */
@@ -1423,7 +1666,12 @@ h1.entry-title,
 .ie-news-archive-grid {
     background: var(--ie-off-white) !important;
     padding: var(--ie-section-pad-y) var(--ie-section-pad-x) !important;
+    gap: 0 !important;
 }
+.ie-news-archive-grid > .e-con-inner {
+    gap: 0 !important;
+}
+
 .ie-news-archive-grid .elementor-post {
     background: var(--ie-white);
     border-radius: var(--ie-radius-md);
@@ -1491,6 +1739,9 @@ h1.entry-title,
 }
 
 /* ie-cat-badge — Heading (H5) */
+.ie-cat-badge {
+    margin-bottom: var(--ie-space-sm);
+}
 .ie-cat-badge .elementor-heading-title {
     display: inline-block !important;
     background: rgba(126, 217, 87, 0.18);
@@ -1502,17 +1753,18 @@ h1.entry-title,
     letter-spacing: 1px;
     padding: 4px 14px;
     border-radius: var(--ie-radius-full);
-    margin-bottom: var(--ie-space-sm);
 }
 
 /* ie-post-title — Heading (H1) */
+.ie-post-title {
+    margin-bottom: var(--ie-space-sm);
+}
 .ie-post-title .elementor-heading-title {
     font-family: var(--ie-font-heading);
     font-size: var(--ie-text-4xl);
     font-weight: 800;
     color: var(--ie-global-blue);
     line-height: var(--ie-leading-snug);
-    margin-bottom: var(--ie-space-sm);
 }
 
 /* ie-post-meta — Text Editor or Post Info widget */
@@ -1576,6 +1828,77 @@ h1.entry-title,
 .ie-footer-inner {
     padding-left: var(--ie-section-pad-x) !important;
     padding-right: var(--ie-section-pad-x) !important;
+}
+
+/* ==========================================================================
+   RESPONSIVE CONTENT WIDTH CAP
+   ========================================================================== */
+
+/* PROBLEM: every full-bleed section below uses Elementor's "Content Width:
+   Full Width" so the background color/photo can stretch edge-to-edge. But a
+   flat 32px padding doesn't cap how WIDE the content itself gets — on a
+   large monitor the heading, badge, and paragraph end up sitting only 32px
+   from the browser edge instead of centered in a readable column, even
+   though the header/footer content is centered via a max-width container.
+
+   FIX: replace the flat padding with a responsive calc() formula. On
+   screens up to ~1264px wide, padding stays at the normal 32px. On wider
+   screens, padding grows to absorb the extra space — capping the visible
+   content at 1200px and centering it — while the section's own background
+   still spans 100% of the browser. No Elementor setting changes needed;
+   this is a pure CSS override and takes effect the moment the stylesheet
+   is refreshed. */
+
+.ie-hero,
+.ie-archive-hero,
+.ie-single-hero,
+.ie-trip-hero,
+.ie-intro,
+.ie-research-strip,
+.ie-travel-strip,
+.ie-about-strip,
+.ie-news-strip,
+.ie-archive-body,
+.ie-single-body,
+.ie-trip-narrative,
+.ie-trip-gallery-section,
+.ie-gallery-body,
+.ie-news-archive-grid,
+.ie-news-body,
+.ie-pub-section,
+.ie-podcast-platforms,
+.ie-about-page,
+.ie-header-inner,
+.ie-footer-inner {
+    padding-left: max(var(--ie-section-pad-x), calc((100% - var(--ie-container)) / 2 + var(--ie-section-pad-x))) !important;
+    padding-right: max(var(--ie-section-pad-x), calc((100% - var(--ie-container)) / 2 + var(--ie-section-pad-x))) !important;
+}
+
+/* ==========================================================================
+   STACKED-COLUMN SPACING (divider / eyebrow / heading groups)
+   ========================================================================== */
+
+/* PROBLEM: Elementor's Flexbox Container widget applies its own default
+   vertical "gap" between every stacked child (divider, eyebrow, heading,
+   subtitle, body text, button, etc). That gap sits ON TOP of each widget's
+   own margin-bottom, making the divider→eyebrow→heading group look far
+   looser than the comp, which controls all of that spacing purely through
+   each element's own margin — no gap at all.
+
+   FIX: zero the gap on any flex Container whose direct child starts with
+   ie-divider-accent or ie-eyebrow, using :has(). This is a pure CSS fix —
+   no Elementor Layout panel changes needed. Every widget class that can
+   appear inside one of these stacked columns (ie-eyebrow, ie-*-title,
+   ie-*-subtitle, ie-body-text, ie-credentials) already carries its own
+   margin-bottom tuned to match the comp exactly, so removing the
+   Container's gap and relying on those margins reproduces the comp's
+   spacing precisely.
+
+   Browser support: :has() is supported in all current major browsers
+   (Chrome/Edge 105+, Safari 15.4+, Firefox 121+) — safe for production use. */
+.e-con:has(> .ie-divider-accent),
+.e-con:has(> .ie-eyebrow) {
+    gap: 0 !important;
 }
 
 /* ==========================================================================
