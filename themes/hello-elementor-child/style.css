@@ -4,7 +4,7 @@
  Description:  Hello Elementor Child Theme — International Elephants
  Author:       Dr. Michelle Szydlowski
  Template:     hello-elementor
- Version:      1.21.0
+ Version:      1.22.0
  Text Domain:  hello-elementor-child
 */
 
@@ -1899,6 +1899,51 @@ h1.entry-title,
 .e-con:has(> .ie-divider-accent),
 .e-con:has(> .ie-eyebrow) {
     gap: 0 !important;
+}
+
+/* ==========================================================================
+   MOBILE TYPOGRAPHY SCALE-DOWN
+   ========================================================================== */
+
+/* PROBLEM: large desktop heading sizes (48-62px) don't leave room for long
+   single words — "Anthrozoology" (13 characters), "Szydlowski" (10) — to
+   wrap properly on a ~375px phone screen. Browsers don't break mid-word by
+   default, so the word either overflows past the viewport edge or forces
+   horizontal scroll, both broken. Fixed two ways: font-size drops
+   significantly on mobile for every large heading class in the system, and
+   overflow-wrap: break-word is added as a safety net so any future
+   unexpectedly long word (a longer name, a technical term) breaks cleanly
+   instead of overflowing, regardless of the exact size chosen below. */
+
+@media (max-width: 767px) {
+    .ie-hero-title .elementor-heading-title {
+        font-size: 34px !important;
+        overflow-wrap: break-word !important;
+    }
+    .ie-archive-title .elementor-heading-title {
+        font-size: 30px !important;
+        overflow-wrap: break-word !important;
+    }
+    .ie-single-title .elementor-heading-title {
+        font-size: 26px !important;
+        overflow-wrap: break-word !important;
+    }
+    .ie-trip-title .elementor-heading-title {
+        font-size: 30px !important;
+        overflow-wrap: break-word !important;
+    }
+    .ie-post-title .elementor-heading-title {
+        font-size: 26px !important;
+        overflow-wrap: break-word !important;
+    }
+    .ie-intro-title .elementor-heading-title {
+        font-size: 26px !important;
+        overflow-wrap: break-word !important;
+    }
+    .ie-section-title .elementor-heading-title {
+        font-size: 26px !important;
+        overflow-wrap: break-word !important;
+    }
 }
 
 /* ==========================================================================
